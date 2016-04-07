@@ -41,6 +41,8 @@
 /* eslint max-params:[1, 10] */
 'use strict';
 
+var none = {};
+
 module.exports.Program = Program;
 function Program(headers, definitions) {
     this.headers = headers;
@@ -77,14 +79,14 @@ module.exports.Typedef = Typedef;
 function Typedef(type, id, annotations) {
     this.valueType = type;
     this.id = id;
-    this.annotations = annotations;
+    this.annotations = annotations || none;
 }
 Typedef.prototype.type = 'Typedef';
 
 module.exports.BaseType = BaseType;
 function BaseType(type, annotations) {
     this.baseType = type;
-    this.annotations = annotations;
+    this.annotations = annotations || none;
 }
 BaseType.prototype.type = 'BaseType';
 
@@ -92,7 +94,7 @@ module.exports.Enum = Enum;
 function Enum(id, definitions, annotations) {
     this.id = id;
     this.definitions = definitions;
-    this.annotations = annotations;
+    this.annotations = annotations || none;
 }
 Enum.prototype.type = 'Enum';
 
@@ -100,7 +102,7 @@ module.exports.EnumDefinition = EnumDefinition;
 function EnumDefinition(id, value, annotations) {
     this.id = id;
     this.value = value;
-    this.annotations = annotations;
+    this.annotations = annotations || none;
 }
 EnumDefinition.prototype.fieldType = new BaseType('i32');
 EnumDefinition.prototype.type = 'EnumDefinition';
@@ -109,7 +111,7 @@ module.exports.Senum = Senum;
 function Senum(id, definitions, annotations) {
     this.id = id;
     this.senumDefinitions = definitions;
-    this.annotations = annotations;
+    this.annotations = annotations || none;
 }
 Senum.prototype.type = 'Senum';
 
@@ -144,16 +146,17 @@ module.exports.Struct = Struct;
 function Struct(id, fields, annotations) {
     this.id = id;
     this.fields = fields;
-    this.annotations = annotations;
     this.isArgument = false;
     this.isResult = false;
+    this.annotations = annotations || none;
 }
 Struct.prototype.type = 'Struct';
 
 module.exports.Union = Union;
-function Union(id, fields) {
+function Union(id, fields, annotations) {
     this.id = id;
     this.fields = fields;
+    this.annotations = annotations || none;
 }
 Union.prototype.type = 'Union';
 
@@ -161,7 +164,7 @@ module.exports.Exception = Exception;
 function Exception(id, fields, annotations) {
     this.id = id;
     this.fields = fields;
-    this.annotations = annotations;
+    this.annotations = annotations || none;
 }
 Exception.prototype.type = 'Exception';
 
@@ -169,8 +172,8 @@ module.exports.Service = Service;
 function Service(id, functions, annotations, baseService) {
     this.id = id;
     this.functions = functions;
-    this.annotations = annotations;
     this.baseService = baseService;
+    this.annotations = annotations || none;
 }
 Service.prototype.type = 'Service';
 
@@ -181,8 +184,8 @@ function FunctionDefinition(id, fields, ft, _throws, annotations, oneway) {
     this.fields = fields;
     this.fields.isArgument = true;
     this.throws = _throws;
-    this.annotations = annotations;
     this.oneway = oneway;
+    this.annotations = annotations || none;
 }
 FunctionDefinition.prototype.type = 'function';
 
@@ -194,7 +197,7 @@ function Field(id, ft, name, req, fv, annotations) {
     this.required = req === 'required';
     this.optional = req === 'optional';
     this.defaultValue = fv;
-    this.annotations = annotations;
+    this.annotations = annotations || none;
 }
 Field.prototype.type = 'Field';
 
@@ -210,21 +213,21 @@ module.exports.MapType = MapType;
 function MapType(keyType, valueType, annotations) {
     this.keyType = keyType;
     this.valueType = valueType;
-    this.annotations = annotations;
+    this.annotations = annotations || none;
 }
 MapType.prototype.type = 'Map';
 
 module.exports.SetType = SetType;
 function SetType(valueType, annotations) {
     this.valueType = valueType;
-    this.annotations = annotations;
+    this.annotations = annotations || none;
 }
 SetType.prototype.type = 'Set';
 
 module.exports.ListType = ListType;
 function ListType(valueType, annotations) {
     this.valueType = valueType;
-    this.annotations = annotations;
+    this.annotations = annotations || none;
 }
 ListType.prototype.type = 'List';
 
