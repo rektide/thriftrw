@@ -30,7 +30,8 @@ function main() {
     try {
         var thrift = new Thrift({
             entryPoint: path.resolve(process.argv[2]),
-            allowFilesystemAccess: true
+            allowFilesystemAccess: true,
+            strict: false,
         });
         console.log(JSON.stringify(thrift.toJSON()));
     } catch (error) {
